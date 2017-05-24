@@ -1,15 +1,81 @@
-h1 {
-    color: blue;
+body {
+    background-color: darkgray;
+}
+
+#title {
+    color: yellow;
+    text-shadow: 3px 2px black;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 80px;
+    font-weight:700;
+    transform: translateX(61%);
+    animation: header 30s linear infinite;
+}
+
+@keyframes header {
+    0% {transform:translateX(61%);}
+    100% {transform: translateX(-61%);}
+    
+}
+
+.header {
+    background: url('http://clipart-library.com/images/8cEb9aG6i.png');
+    background-size: contain;
+    margin-top: 0px;
+    margin-bottom: 20px;
+    padding: -20px;
 }
 
 .container {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    
+}
+
+#search-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+}
+
+h1 { 
+    font-family: 'Montserrat', sans-serif;
+    font-size: 50px;
+}
+
+#search-input {
+    margin-bottom: 20px;
+    height: 23px;
+    width: 300px;
+    font-size: 15px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+#search-button {
+    margin-bottom: 20px;
+    font-size:20px;
+    height: auto;
+    width: auto;
+    border-radius: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+#search-container {
+    align-items: center;
 }
 
 #movie-grid {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-around;
+}
+
+.message {
+    font-family: 'Montserrat', sans-serif;
+    width: 50vw;
+    background-color: rgba(100,100,100,0.8);
+    color: white;
 }

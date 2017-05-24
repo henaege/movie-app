@@ -13,10 +13,36 @@ $(document).ready(()=> {
         let nowPlayingHTML = '';
         for (let i=0; i < nowPlayingData.results.length; i++) {
             let posterUrl = imageBaseUrl +'w300'+ nowPlayingData.results[i].poster_path;
-            nowPlayingHTML += `<div><img src="${posterUrl}"></div>`;
+            nowPlayingHTML += `<div class="movie-poster" movie-id=${nowPlayingData.results[i].id}><img src="${posterUrl}"></div>`;
         }
-        console.log(nowPlayingHTML);
+        console.log(nowPlayingData);
         $('#movie-grid').html(nowPlayingHTML);
+        $('.movie-poster').click((event)=> {
+            console.dir(event.target)
+            // change the html inside the modal
+            let thisMovieId = event.target.parentElement.attributes[1].value;
+            let thisMovieUrl = `${apiBaseUrl}/movie/${thisMovieId}?api_key=${apiKey}` ;
+            
+            $.getJSON(thisMovieUrl, (thisMovieData)=> {
+                let thisCastUrl = `${apiBaseUrl}/movie/${thisMovieId}/credits?api_key=${apiKey}`;
+                let modalHTML = thisMovieData.overview;
+                let modalTitle = thisMovieData.title;
+                $.getJSON(thisCastUrl, (thisMovieData)=> {
+                    console.log(thisMovieData);
+                
+                let castList = [];
+                for (let i=0; i < 5; i++) {
+                    castList.push(thisMovieData.cast[i].name);
+                }
+                cast = castList.join(', ');
+                $.fancybox.open(`<div class="message"><h2>${modalTitle}</h2><h3>Starring:</h3><ul>${cast}</ul><h3>Synopsis:</h3>${modalHTML}</div>`);
+                })
+                // open the modal
+                
+            })
+            
+            
+        })
         console.log($('#movie-grid'))
     })
 
@@ -29,13 +55,15 @@ $(document).ready(()=> {
         $.getJSON(searchUrl, (searchMovieData)=> {
             let searchMovieHTML = getHTML(searchMovieData);
             $('#movie-grid').html(searchMovieHTML);
+            
+
         })
 
         function getHTML(data) {
         let newHTML = '';
         for (let i=0; i < data.results.length; i++) {
             let posterUrl = imageBaseUrl +'w300'+ data.results[i].poster_path;
-            newHTML += `<div><img src="${posterUrl}"></div>`;
+            newHTML += `<div class="movie-poster"><img src="${posterUrl}"></div>`;
         }
         return newHTML;
     }
