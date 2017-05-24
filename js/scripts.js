@@ -55,9 +55,35 @@ $(document).ready(()=> {
         $.getJSON(searchUrl, (searchMovieData)=> {
             let searchMovieHTML = getHTML(searchMovieData);
             $('#movie-grid').html(searchMovieHTML);
-            
+            console.log(searchMovieData)
 
+            let thisMovieId = '';
+            for (let i=0; i < searchMovieData.length; i++) {
+                thisMovieId = searchMovieData.results[i].id;
+            }
+            let thisMovieUrl = `${apiBaseUrl}/movie/${thisMovieId}?api_key=${apiKey}` ;
+            
+            $.getJSON(thisMovieUrl, (thisMovieData)=> {
+                let thisCastUrl = `${apiBaseUrl}/movie/${thisMovieId}/credits?api_key=${apiKey}`;
+                let modalHTML = thisMovieData.overview;
+                let modalTitle = thisMovieData.title;
+                $.getJSON(thisCastUrl, (thisMovieData)=> {
+                    console.log(thisMovieData);
+                
+                let castList = [];
+                for (let i=0; i < 5; i++) {
+                    castList.push(thisMovieData.cast[i].name);
+                }
+                cast = castList.join(', ');
+                $.fancybox.open(`<div class="message"><h2>${modalTitle}</h2><h3>Starring:</h3><ul>${cast}</ul><h3>Synopsis:</h3>${modalHTML}</div>`);
+                })
+                // open the modal
+                
+            })
+            
+            
         })
+    
 
         function getHTML(data) {
         let newHTML = '';
