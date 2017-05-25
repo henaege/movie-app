@@ -19,6 +19,11 @@ body {
     
 /*}*/
 
+.sidebar {
+    display: flex;
+    flex-direction: columns;
+}
+
 .header {
     background: url('http://clipart-library.com/images/8cEb9aG6i.png');
     background-size: contain;
@@ -38,7 +43,14 @@ body {
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
     
+}
+
+#movie-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 h1 { 
@@ -85,12 +97,18 @@ button {
 
 .message {
     font-family: 'Montserrat', sans-serif;
-    width: 50vw;
+    width: 65vw;
     background-color: rgba(100,100,100,0.8);
     color: white;
 }
 
 .movie-poster {
     /*flex-grow: 1;*/
-    width: 30%;
+    width: auto;
+    justify-content: space-between;
+}
+
+.fancybox-slide--video .fancybox-content {
+	max-width  : 65%;
+	max-height : 65%;
 }

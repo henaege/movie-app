@@ -32,18 +32,35 @@ $(document).ready(()=> {
             
             $.getJSON(thisMovieUrl, (thisMovieData)=> {
                 let thisCastUrl = `${apiBaseUrl}/movie/${thisMovieId}/credits?api_key=${apiKey}`;
+                let trailerUrl = `${apiBaseUrl}/movie/${thisMovieId}/videos?language=en-US&api_key=${apiKey}`
                 let modalHTML = thisMovieData.overview;
                 let modalTitle = thisMovieData.title;
-                $.getJSON(thisCastUrl, (thisMovieData)=> {
+                let date = thisMovieData.release_date;
+                $.getJSON(trailerUrl, (thisMovieData)=> {
+                    for (let i=0; i < thisMovieData.results.length; i++){
+                        if (thisMovieData.results[i].name == "Official Trailer"){
+                            var youTubeId = thisMovieData.results[i].key;
+                        } else {
+                            var youTubeId = thisMovieData.results[0].key;
+                        }
+
+                    }
+                    console.log(youTubeId)
+                    var trailerLink = `https://www.youtube.com/watch?v=${youTubeId}`
+                    $.getJSON(thisCastUrl, (thisMovieData)=> {
                     console.log(thisMovieData);
                 
-                let castList = [];
-                for (let i=0; i < 5; i++) {
-                    castList.push(thisMovieData.cast[i].name);
-                }
-                cast = castList.join(', ');
-                $.fancybox.open(`<div class="message"><h2>${modalTitle}</h2><h3>Starring:</h3><ul>${cast}</ul><h3>Synopsis:</h3>${modalHTML}</div>`);
-                });
+                    let castList = [];
+                    let director = thisMovieData.crew[0].name;
+                    
+                    for (let i=0; i < 5; i++) {
+                        castList.push(thisMovieData.cast[i].name);
+                    }
+                    cast = castList.join(', ');
+                    $.fancybox.open(`<div class="message"><h1>${modalTitle}</h1><h2>Director:</h2>${director}<h2>Starring:</h2><ul>${cast}</ul><h3>Release Date:</h3>${date}<h2>Synopsis:</h2>${modalHTML}<div style="margin-top: 20px; text-align:center;"><a class="fancybox-media" href=${trailerLink}><button>View the Trailer</button></a></div></div>`);
+                    });
+                })
+                
                 // open the modal
                 
             });
@@ -53,11 +70,13 @@ $(document).ready(()=> {
         // console.log($('#movie-grid'))
         $grid = $('#movie-grid').isotope({
             itemSelector: '.movie-poster',
-    
+            masonry: {
+                gutter: 10
+            }
         });
-        // $grid.imagesLoaded().progress( function() {
-        //     $grid.isotope('layout');
-        // });
+        $grid.imagesLoaded().progress( function() {
+            $grid.isotope('layout');
+        });
         $('.genre-button').click(function(){
             $grid.isotope({ filter: '.'+this.innerText })
         })
@@ -79,9 +98,17 @@ $(document).ready(()=> {
             $('#movie-grid').html(searchMovieHTML);
             console.log(searchMovieData)
 
+            $('#movie-grid').isotope('destroy');
+
             $grid = $('#movie-grid').isotope({
-            itemSelector: '.movie-poster',
-        });
+                itemSelector: '.movie-poster',
+                masonry: {
+                    gutter: 10
+                }
+            });
+            $grid.imagesLoaded().progress( function() {
+                $grid.isotope('layout');
+            });
         console.log($grid)
             
             $('.genre-button').click(function(){
@@ -101,15 +128,16 @@ $(document).ready(()=> {
                 let thisCastUrl = `${apiBaseUrl}/movie/${thisMovieId}/credits?api_key=${apiKey}`;
                 let modalHTML = thisMovieData.overview;
                 let modalTitle = thisMovieData.title;
+                let date = thisMovieData.release_date;
                 $.getJSON(thisCastUrl, (thisMovieData)=> {
                     console.log(thisMovieData);
-                
+                let director = thisMovieData.crew[0].name;
                 let castList = [];
                 for (let i=0; i < 5; i++) {
                     castList.push(thisMovieData.cast[i].name);
                 }
                 cast = castList.join(', ');
-                $.fancybox.open(`<div class="message"><h2>${modalTitle}</h2><h3>Starring:</h3><ul>${cast}</ul><h3>Synopsis:</h3>${modalHTML}</div>`);
+                $.fancybox.open(`<div class="message"><h1>${modalTitle}</h1><h2>Director:</h2>${director}<h2>Starring:</h2><ul>${cast}</ul><h3>Release Date:</h3>${date}<h2>Synopsis:</h2>${modalHTML}</div>`);
                 })
                 // open the modal
                 
