@@ -5,6 +5,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js"></script>
+        <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.0.47/jquery.fancybox.min.css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.0.47/jquery.fancybox.min.js"></script>
         <script src="./js/config.js"></script>
@@ -15,13 +17,16 @@
     <body>
         <div class="container">
             <div class="header">
-                <h1 id="title">MOVIESMOVIESMOVIESMOVIESMOVIESMOVIESMOVIESMOVIESMOVIESMOVIESMOVIESMOVIESMOVIESMOVIES</h1>
+                <h1 id="title">MOVIESMOVIESMOVIESMOVIES</h1>
             </div>
             <div id"search-container">
                 <form id="movie-form">
                     <input id="search-input" type="text" placeholder="Enter your movie search here"/>
                     <button type="submit"id="search-button">Search</button>
                 </form>
+                <div id="genre-buttons" class="buttons">
+                    <!--jQuery, put our buttons in please!-->
+                </div>
             </div>
             <div id="grid-header"></div>
             <div id="movie-grid">

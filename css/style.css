@@ -1,5 +1,6 @@
 body {
     background-color: darkgray;
+    width: 100vw;
 }
 
 #title {
@@ -8,15 +9,15 @@ body {
     font-family: 'Montserrat', sans-serif;
     font-size: 80px;
     font-weight:700;
-    transform: translateX(61%);
-    animation: header 30s linear infinite;
+    /*transform: translateX(20%);*/
+    /*animation: header 20s linear infinite;*/
 }
 
-@keyframes header {
-    0% {transform:translateX(61%);}
-    100% {transform: translateX(-61%);}
+/*@keyframes header {*/
+    /*0% {transform:translateX(20%);}*/
+    /*100% {transform: translateX(-20%);}*/
     
-}
+/*}*/
 
 .header {
     background: url('http://clipart-library.com/images/8cEb9aG6i.png');
@@ -53,7 +54,14 @@ h1 {
     font-family: 'Montserrat', sans-serif;
 }
 
-#search-button {
+.buttons {
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+button {
     margin-bottom: 20px;
     font-size:20px;
     height: auto;
@@ -62,15 +70,17 @@ h1 {
     font-family: 'Montserrat', sans-serif;
 }
 
+
 #search-container {
     align-items: center;
 }
 
 #movie-grid {
-    display: flex;
-    flex-direction: row;
+    /*display: flex;*/
+    /*flex-direction: row;*/
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .message {
@@ -78,4 +88,9 @@ h1 {
     width: 50vw;
     background-color: rgba(100,100,100,0.8);
     color: white;
+}
+
+.movie-poster {
+    /*flex-grow: 1;*/
+    width: 30%;
 }
