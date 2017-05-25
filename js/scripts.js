@@ -6,6 +6,7 @@ $(document).ready(()=> {
     const imageBaseUrl = 'http://image.tmdb.org/t/p/';
 
     const nowPlayingUrl = apiBaseUrl + '/movie/now_playing?api_key=' + apiKey;
+
     // console.log(nowPlayingUrl)
     // Make AJAX request to nowPlayingUrl
     $.getJSON(nowPlayingUrl, (nowPlayingData)=> {
@@ -13,7 +14,7 @@ $(document).ready(()=> {
         let nowPlayingHTML = '';
         for (let i=0; i < nowPlayingData.results.length; i++) {
             let posterUrl = imageBaseUrl +'w300'+ nowPlayingData.results[i].poster_path;
-            nowPlayingHTML += `<div class="movie-poster" movie-id=${nowPlayingData.results[i].id}><img src="${posterUrl}"></div>`;
+            nowPlayingHTML += `<div class="movie-poster" movie-id="${nowPlayingData.results[i].id}"><img src="${posterUrl}"></div>`;
         }
         console.log(nowPlayingData);
         let nowPlayingTitle = `<h1>Now Playing:</h1>`
@@ -24,6 +25,7 @@ $(document).ready(()=> {
             // change the html inside the modal
             let thisMovieId = event.target.parentElement.attributes[1].value;
             let thisMovieUrl = `${apiBaseUrl}/movie/${thisMovieId}?api_key=${apiKey}` ;
+            
             
             $.getJSON(thisMovieUrl, (thisMovieData)=> {
                 let thisCastUrl = `${apiBaseUrl}/movie/${thisMovieId}/credits?api_key=${apiKey}`;
@@ -68,7 +70,6 @@ $(document).ready(()=> {
             // change the html inside the modal
             let thisMovieId = event.target.parentElement.attributes[1].value;
             let thisMovieUrl = `${apiBaseUrl}/movie/${thisMovieId}?api_key=${apiKey}` ;
-            console.log(thisMovieId)
             
             $.getJSON(thisMovieUrl, (thisMovieData)=> {
                 let thisCastUrl = `${apiBaseUrl}/movie/${thisMovieId}/credits?api_key=${apiKey}`;
@@ -99,7 +100,7 @@ $(document).ready(()=> {
         let newHTML = '';
         for (let i=0; i < data.results.length; i++) {
             let posterUrl = imageBaseUrl +'w300'+ data.results[i].poster_path;
-            newHTML += `<div class="movie-poster"><img src="${posterUrl}"></div>`;
+            newHTML += `<div class="movie-poster" movie-id="${data.results[i].id}"><img src="${posterUrl}"></div>`;
         }
         return newHTML;
     }
