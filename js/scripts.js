@@ -16,6 +16,8 @@ $(document).ready(()=> {
             nowPlayingHTML += `<div class="movie-poster" movie-id=${nowPlayingData.results[i].id}><img src="${posterUrl}"></div>`;
         }
         console.log(nowPlayingData);
+        let nowPlayingTitle = `<h1>Now Playing:</h1>`
+        $('#grid-header').html(nowPlayingTitle)
         $('#movie-grid').html(nowPlayingHTML);
         $('.movie-poster').click((event)=> {
             console.dir(event.target)
@@ -54,14 +56,19 @@ $(document).ready(()=> {
         let searchUrl = apiBaseUrl + '/search/movie?query=' + userInput + '&api_key='+apiKey;
         $.getJSON(searchUrl, (searchMovieData)=> {
             let searchMovieHTML = getHTML(searchMovieData);
+            let searchResults = `<h1>Search Results:</h1>`
+            $('#grid-header').html(searchResults);
             $('#movie-grid').html(searchMovieHTML);
             console.log(searchMovieData)
 
-            let thisMovieId = '';
-            for (let i=0; i < searchMovieData.length; i++) {
-                thisMovieId = searchMovieData.results[i].id;
-            }
+            
+            
+            $('.movie-poster').click((event)=> {
+            console.dir(event.target)
+            // change the html inside the modal
+            let thisMovieId = event.target.parentElement.attributes[1].value;
             let thisMovieUrl = `${apiBaseUrl}/movie/${thisMovieId}?api_key=${apiKey}` ;
+            console.log(thisMovieId)
             
             $.getJSON(thisMovieUrl, (thisMovieData)=> {
                 let thisCastUrl = `${apiBaseUrl}/movie/${thisMovieId}/credits?api_key=${apiKey}`;
@@ -80,6 +87,9 @@ $(document).ready(()=> {
                 // open the modal
                 
             })
+            
+            
+        })
             
             
         })
