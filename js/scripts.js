@@ -46,7 +46,7 @@ $(document).ready(()=> {
 
                     }
                     console.log(youTubeId)
-                    var trailerLink = `https://www.youtube.com/watch?v=${youTubeId}`
+                    var trailerLink = `https://www.youtube.com/watch_popup?v=${youTubeId}`
                     $.getJSON(thisCastUrl, (thisMovieData)=> {
                     console.log(thisMovieData);
                 
@@ -57,7 +57,7 @@ $(document).ready(()=> {
                         castList.push(thisMovieData.cast[i].name);
                     }
                     cast = castList.join(', ');
-                    $.fancybox.open(`<div class="message"><h1>${modalTitle}</h1><h2>Director:</h2>${director}<h2>Starring:</h2><ul>${cast}</ul><h3>Release Date:</h3>${date}<h2>Synopsis:</h2>${modalHTML}<div style="margin-top: 20px; text-align:center;"><a class="fancybox-media" href=${trailerLink}><button>View the Trailer</button></a></div></div>`);
+                    $.fancybox.open(`<div class="message"><h1>${modalTitle}</h1><h2>Director:</h2>${director}<h2>Starring:</h2><ul>${cast}</ul><h3>Release Date:</h3>${date}<h2>Synopsis:</h2>${modalHTML}<div style="margin-top: 20px; text-align:center;"><a data-fancybox href=${trailerLink}><button>View the Trailer</button></a></div></div>`);
                     });
                 })
                 
@@ -126,22 +126,38 @@ $(document).ready(()=> {
             
             $.getJSON(thisMovieUrl, (thisMovieData)=> {
                 let thisCastUrl = `${apiBaseUrl}/movie/${thisMovieId}/credits?api_key=${apiKey}`;
+                let trailerUrl = `${apiBaseUrl}/movie/${thisMovieId}/videos?language=en-US&api_key=${apiKey}`
                 let modalHTML = thisMovieData.overview;
                 let modalTitle = thisMovieData.title;
                 let date = thisMovieData.release_date;
-                $.getJSON(thisCastUrl, (thisMovieData)=> {
+                $.getJSON(trailerUrl, (thisMovieData)=> {
+                    for (let i=0; i < thisMovieData.results.length; i++){
+                        if (thisMovieData.results[i].name == "Official Trailer"){
+                            var youTubeId = thisMovieData.results[i].key;
+                        } else {
+                            var youTubeId = thisMovieData.results[0].key;
+                        }
+
+                    }
+                    console.log(youTubeId)
+                    var trailerLink = `https://www.youtube.com/watch_popup?v=${youTubeId}`
+                    $.getJSON(thisCastUrl, (thisMovieData)=> {
                     console.log(thisMovieData);
-                let director = thisMovieData.crew[0].name;
-                let castList = [];
-                for (let i=0; i < 5; i++) {
-                    castList.push(thisMovieData.cast[i].name);
-                }
-                cast = castList.join(', ');
-                $.fancybox.open(`<div class="message"><h1>${modalTitle}</h1><h2>Director:</h2>${director}<h2>Starring:</h2><ul>${cast}</ul><h3>Release Date:</h3>${date}<h2>Synopsis:</h2>${modalHTML}</div>`);
+                
+                    let castList = [];
+                    let director = thisMovieData.crew[0].name;
+                    
+                    for (let i=0; i < 5; i++) {
+                        castList.push(thisMovieData.cast[i].name);
+                    }
+                    cast = castList.join(', ');
+                    $.fancybox.open(`<div class="message"><h1>${modalTitle}</h1><h2>Director:</h2>${director}<h2>Starring:</h2><ul>${cast}</ul><h3>Release Date:</h3>${date}<h2>Synopsis:</h2>${modalHTML}<div style="margin-top: 20px; text-align:center;"><a data-fancybox href=${trailerLink}><button>View the Trailer</button></a></div></div>`);
+                    });
                 })
+                
                 // open the modal
                 
-            })
+            });
             
             
         })
