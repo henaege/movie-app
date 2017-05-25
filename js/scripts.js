@@ -46,7 +46,7 @@ $(document).ready(()=> {
 
                     }
                     console.log(youTubeId)
-                    var trailerLink = `https://www.youtube.com/watch_popup?v=${youTubeId}`
+                    var trailerLink = `https://www.youtube.com/watch?v=${youTubeId}`
                     $.getJSON(thisCastUrl, (thisMovieData)=> {
                     console.log(thisMovieData);
                 
@@ -140,7 +140,7 @@ $(document).ready(()=> {
 
                     }
                     console.log(youTubeId)
-                    var trailerLink = `https://www.youtube.com/watch_popup?v=${youTubeId}`
+                    var trailerLink = `https://www.youtube.com/watch?v=${youTubeId}`
                     $.getJSON(thisCastUrl, (thisMovieData)=> {
                     console.log(thisMovieData);
                 
