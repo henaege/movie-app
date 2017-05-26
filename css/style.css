@@ -97,7 +97,7 @@ button {
 
 .message {
     font-family: 'Montserrat', sans-serif;
-    width: 65vw;
+    max-width: 85vw;
     background-color: rgba(100,100,100,0.8);
     color: white;
 }
